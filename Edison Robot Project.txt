@@ -1,0 +1,37 @@
+﻿#This code is designed to be used with www.edpyapp.com and an Edison Robot V2. It is meant to make the robot (poorly) drive along a flat oval shaped black track with white inbetween, while also being able to detect other robots/obstacles in front of it, dodge them, then get back on the track in front of the obstacle.
+import Ed
+
+
+Ed.EdisonVersion = Ed.V2
+
+
+Ed.DistanceUnits = Ed.CM
+Ed.Tempo = Ed.TEMPO_MEDIUM
+
+
+SideTurn = 0
+obstacle = 0
+Ed.LineTrackerLed(Ed.ON)
+Ed.ObstacleDetectionBeam(Ed.ON)
+while True:
+        Ed.Drive(Ed.FORWARD,Ed.SPEED_5,Ed.DISTANCE_UNLIMITED)
+        if Ed.ReadLineState()==Ed.LINE_ON_WHITE:
+                Ed.Drive(Ed.FORWARD_LEFT, Ed.SPEED_3, Ed.DISTANCE_UNLIMITED)
+        else:
+            Ed.Drive(Ed.FORWARD_RIGHT, Ed.SPEED_3, Ed.DISTANCE_UNLIMITED)
+        obstacle = Ed.ReadObstacleDetection()
+        if obstacle>Ed.OBSTACLE_NONE:
+                Ed.LeftLed(Ed.ON)
+                Ed.RightLed(Ed.ON)
+                Ed.PlayBeep()
+                Ed.Drive(Ed.BACKWARD, Ed.SPEED_5, 5)
+                if obstacle==Ed.OBSTACLE_AHEAD:
+                        Ed.Drive(Ed.SPIN_RIGHT, Ed.SPEED_5, 45)
+                        Ed.Drive(Ed.FORWARD,Ed.SPEED_10, 15)
+                        Ed.Drive(Ed.SPIN_LEFT,Ed.SPEED_5,55)
+                        if Ed.ReadLineState()==Ed.LINE_ON_WHITE:
+                            Ed.Drive(Ed.FORWARD, Ed.SPEED_6, Ed.DISTANCE_UNLIMITED)
+                        else:
+                            pass
+        Ed.LeftLed(Ed.OFF)
+        Ed.RightLed(Ed.OFF)
