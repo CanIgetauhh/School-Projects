@@ -1,0 +1,127 @@
+/*  This code was written for the Stitch the Loop e-textiles curriculum by the
+Exploring Computer Science e-textiles team. ECS 2018 GPL V3 for non commercial use.  
+ECS 2018 CC- BY NC SA.  */
+
+
+int mode = 0; 
+int led1 = 9; //We named each led to make it easier to code
+int led2 = 6;
+int led3 = 12;
+int led4 = 10;
+int switch2 = 4;
+int switch1 = 19; //We named our switches 
+int delaytime1 = 50;
+bool thingamajig = false;
+
+
+void setup() {
+  
+  Serial.begin(9600);   //start serial connection
+  pinMode(switch1, INPUT); //Set switches to inputs
+  pinMode(switch2, INPUT);
+  pinMode(led1, OUTPUT); //Set lights to outputs
+  pinMode(led2, OUTPUT); 
+  pinMode(led3, OUTPUT);
+  pinMode(led4, OUTPUT);
+}
+
+
+void loop() {
+
+
+  int switch1storage = digitalRead(switch1);
+  int switch2storage = digitalRead(switch2);
+  Serial.println(switch1storage, switch2storage);
+
+
+  delay (100); //delay for 1/10 of a second every time it reads the switches
+  if (switch1storage == HIGH) {
+    delay(switch1storage == LOW);
+    mode = mode + 1;
+  }
+  else if (switch2storage == HIGH) {
+    delay(switch2storage == LOW);
+    mode = mode - 1;
+  }
+  if (mode == 4) {
+    mode = 0;
+  }
+  if (mode == 0) {
+    allOff();
+  }
+  if (mode == 1) {
+    blinkingPattern1();
+  }
+  if (mode == 2) {
+    blinkingPattern2();
+  }
+  if (mode == 3) {
+    blinkingPattern3();
+  }
+}
+
+
+void allOff() {
+  digitalWrite(led1, LOW);
+  digitalWrite(led2, LOW);
+  digitalWrite(led3, LOW);
+  digitalWrite(led4, LOW);
+}
+void blinkingPattern1() { 
+ digitalWrite(led1, HIGH);   
+ delay(delaytime1);
+ digitalWrite(led1, LOW);  
+ delay(delaytime1);
+ digitalWrite(led2, HIGH);    
+ delay(delaytime1);
+ digitalWrite(led2, LOW);  
+ delay(delaytime1);
+ digitalWrite(led3, HIGH);   
+ delay(delaytime1);
+ digitalWrite(led3, LOW);  
+ delay(delaytime1);
+ digitalWrite(led4, HIGH);   
+ delay(delaytime1);
+ digitalWrite(led4, LOW);   
+ delay(delaytime1);
+ digitalWrite(led3, HIGH);   
+ delay(delaytime1);
+ digitalWrite(led3, LOW);  
+ delay(delaytime1);
+ digitalWrite(led2, HIGH);   
+ delay(delaytime1);
+ digitalWrite(led2, LOW);  
+ delay(delaytime1);
+ digitalWrite(led1, HIGH);   
+ delay(delaytime1);
+ digitalWrite(led1, LOW); 
+ delay(delaytime1);
+}
+void blinkingPattern2() {
+  digitalWrite(led1, HIGH);
+  digitalWrite(led2, HIGH);
+  digitalWrite(led3, HIGH); 
+  digitalWrite(led4, HIGH);
+  delay(delaytime1);
+  delay(delaytime1);
+  digitalWrite(led1, LOW);
+  digitalWrite(led2, LOW);
+  digitalWrite(led3, LOW); 
+  digitalWrite(led4, LOW);
+  delay(delaytime1);
+  delay(delaytime1);
+}
+void blinkingPattern3() {
+  digitalWrite(led1, HIGH);
+  digitalWrite(led2, LOW);
+  digitalWrite(led3, HIGH);
+  digitalWrite(led4, LOW);
+  delay(delaytime1);
+  delay(delaytime1);
+  digitalWrite(led1, LOW);
+  digitalWrite(led2, HIGH);
+  digitalWrite(led3, LOW);
+  digitalWrite(led4, HIGH);
+  delay(delaytime1);
+  delay(delaytime1);
+}
