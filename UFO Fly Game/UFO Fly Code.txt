@@ -1,0 +1,54 @@
+playSound("sound://category_loops/pulsating_discovery_loop1.mp3", true);
+var city = createSprite(200, 200);
+var ufo = createSprite(70, 200);
+var building1d = createSprite(500, randomNumber(-500, -500));
+var building1u = createSprite(500, building1d.y - 475);
+var building2d = createSprite(500, randomNumber(200, 600));
+var building2u = createSprite(500, building2d.y - 475);
+ufo.scale = 0.15;
+building1d.scale = 1;
+var countdown2 = 40;
+var start = createSprite(-100, -100);
+createEdgeSprites();
+building2d.setAnimation("building_19_1_copy_1");
+building1u.setAnimation("building_15_1");
+building2u.setAnimation("building_15_1_copy_1");
+ufo.setAnimation("ufo_1");
+building1d.setAnimation("building_19_1");
+city.setAnimation("city_1");
+function death() {
+  ufo.setAnimation("burst13_1");
+  start.x = -200;
+}
+function draw() {
+  if (keyDown("space")) {
+    ufo.velocityY = -5;
+  } else {
+    ufo.velocityY = 5;
+  }
+  if (ufo.isTouching(building1d)) {
+    death();
+  }
+  if (ufo.isTouching(building1u)) {
+    death();
+  }
+  if (ufo.isTouching(edges)) {
+    death();
+  }
+  building1d.velocityX = -5;
+  building1u.velocityX = -5;
+  if (World.seconds % 5 == 0) {
+    building1d.x = 500;
+    building1d.y = randomNumber(300, 600);
+    building1u.x = 500;
+    building1u.y = building1d.y - 475;
+  }
+  if (start.x == -200) {
+    if (countdown2 == 0) {
+      ufo.destroy();
+    } else {
+      countdown2 = countdown2 - 1;
+    }
+  }
+  drawSprites();
+}
